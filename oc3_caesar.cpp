@@ -76,7 +76,9 @@ void CaesarApp::initVideo()
   _d->engine = new GfxSdlEngine();
    
   /* Typical resolutions:
-   * 640 x 480; 800 x 600; 1024 x 768; 1400 x 1050; 1600 x 1200
+   * 4:3   - 640 x 480; 800 x 600; 1024 x 768; 1600 x 1200; 2048 x 1536
+   * 16:9  - 1280 x 720; 1366 x 768; 1600 x 900; 1920 x 1080; 2560 x 1440
+   * 16:10 - 1280 x 800; 1440 x 900; 1680 x 1050; 1920 x 1200; 2560 x 1600
    */
   GfxEngine::instance().setScreenSize(1024, 768);
   GfxEngine::instance().init();
