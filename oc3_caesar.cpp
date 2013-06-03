@@ -72,7 +72,7 @@ void CaesarApp::Impl::initLocale()
 
 void CaesarApp::initVideo()
 {
-  StringHelper::debug( 0xff, "init graphic engine" );
+  StringHelper::debug( 0xff, "Initiating graphics engine." );
   _d->engine = new GfxSdlEngine();
    
   /* Typical resolutions:
@@ -86,21 +86,28 @@ void CaesarApp::initVideo()
 
 void CaesarApp::initSound()
 {
-  StringHelper::debug( 0xff, "init sound engine" );
+  StringHelper::debug( 0xff, "Initiating sound engine." );
   new SoundEngine();
   SoundEngine::instance().init();
 }
 
 void CaesarApp::initWaitPictures()
 {
-  std::cout << "load wait images begin" << std::endl;
+  Timer tm; 
+  tm.start();
+  std::cout << "Loading images." << std::endl;
   PicLoader &pic_loader = PicLoader::instance();
   pic_loader.load_wait();
-  std::cout << "load wait images end" << std::endl;
+  tm.stop();
+  std::cout << "Images loaded in " << tm.duration() << "ms." << std::endl;
 
-  std::cout << "convert images begin" << std::endl;
+  tm.start();
+  std::cout << "Converting images" << std::endl;
   GfxEngine::instance().loadPictures(pic_loader.get_pictures());
-  std::cout << "convert images end" << std::endl;
+  tm.stop();
+  std::cout << "Images converted in " << tm.duration() << "ms." << std::endl;
+  delete tm;
+  tm = NULL;
 }
 
 void CaesarApp::initGuiEnvironment()
