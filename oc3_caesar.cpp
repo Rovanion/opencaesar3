@@ -66,7 +66,7 @@ void CaesarApp::Impl::initLocale()
 {
   // init the internationalization library (gettext)
   setlocale(LC_ALL, "");
-  bindtextdomain( "caesar", "." );
+  bindtextdomain( "caesar", "./locale" );
   textdomain( "caesar" );
 }
 
@@ -344,4 +344,3 @@ int main(int argc, char* argv[])
 
    return 0;
 }
-
