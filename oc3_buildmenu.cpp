@@ -13,6 +13,8 @@
 // You should have received a copy of the GNU General Public License
 // along with openCaesar3.  If not, see <http://www.gnu.org/licenses/>.
 
+#include <cstdio>
+#include <cstring>
 
 #include "oc3_buildmenu.hpp"
 #include "oc3_gettext.hpp"
@@ -239,7 +241,7 @@ void BuildMenu_engineering::addButtons()
     addBuildButton(B_SHIPYARD);
     addBuildButton(B_WHARF);
     addBuildButton(B_TRIUMPHAL_ARCH);
-    
+    addBuildButton(B_GARDEN);
     addBuildButton(B_PLAZA);
 }
 
@@ -257,6 +259,10 @@ void BuildMenu_administration::addButtons()
     addBuildButton(B_GOVERNOR_HOUSE);
     addBuildButton(B_GOVERNOR_VILLA);
     addBuildButton(B_GOVERNOR_PALACE);
+
+    addBuildButton(B_STATUE1);
+    addBuildButton(B_STATUE2);
+    addBuildButton(B_STATUE3);
 }
 
 BuildMenu_administration::BuildMenu_administration( Widget* parent, const Rect& rectangle )

@@ -21,7 +21,7 @@ WidgetDeleter::~WidgetDeleter(void)
 }
 
 WidgetDeleter::WidgetDeleter( Widget* parent, size_t time )
-      : WidgetAnimator( parent, 0 )
+		: WidgetAnimator( parent, 0 )
 {
   _delay = time;
   _startTime = DateTime::getElapsedTime();

@@ -31,6 +31,7 @@
 #include "oc3_pic_loader.hpp"
 #include "oc3_picture.hpp"
 #include "oc3_positioni.hpp"
+#include "oc3_eventconverter.hpp"
 
 
 GfxGlEngine::GfxGlEngine() : GfxEngine()
@@ -82,18 +83,19 @@ void GfxGlEngine::exit()
 
 void GfxGlEngine::unloadPicture(Picture &ioPicture)
 {
-   glDeleteTextures(1, &ioPicture._glTextureID);
-   SDL_FreeSurface(ioPicture._surface);
-   ioPicture._glTextureID = 0;
-   ioPicture._surface = NULL;
+  const GLuint& texture = (GLuint)ioPicture.getGlTextureID();
+  glDeleteTextures(1, &texture );
+  SDL_FreeSurface(ioPicture.getSurface());
+
+  ioPicture.reset();
 }
 
 void GfxGlEngine::loadPicture(Picture& ioPicture)
 {
-   GLuint &texture = ioPicture._glTextureID;
-   SDL_Surface *surface = ioPicture._surface;
+   GLuint* texture =  new GLuint(ioPicture.getGlTextureID());
+   SDL_Surface *surface = ioPicture.getSurface();
    GLenum texture_format;
-   GLint  nOfColors;
+   GLint nOfColors;
 
    // SDL_Surface *surface2
    // get the number of channels in the SDL surface
@@ -121,11 +123,11 @@ void GfxGlEngine::loadPicture(Picture& ioPicture)
    {
       // the picture has no texture ID!
       // generate a texture ID
-      glGenTextures( 1, &texture );
+      glGenTextures( 1, texture );
    }
 
    // Bind the texture object
-   glBindTexture( GL_TEXTURE_2D, texture );
+   glBindTexture( GL_TEXTURE_2D, *texture );
 
    // Set the texture's stretching properties
    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
@@ -153,10 +155,10 @@ void GfxGlEngine::exit_frame()
 
 void GfxGlEngine::drawPicture(const Picture &picture, const int dx, const int dy)
 {
-   GLuint aTextureID = picture._glTextureID;
-   float x0 = (float)(dx+picture.get_xoffset());
+   GLuint aTextureID = picture.getGlTextureID();
+   float x0 = (float)( dx+picture.getOffset().getX());
    float x1 = x0+picture.getWidth();
-   float y0 = (float)(dy-picture.get_yoffset());
+   float y0 = (float)(dy-picture.getOffset().getY());
    float y1 = y0+picture.getHeight();
 
 
@@ -207,4 +209,22 @@ void GfxGlEngine::createScreenshot( const std::string& filename )
 unsigned int GfxGlEngine::getFps() const
 {
   return 0;
+}
+
+void GfxGlEngine::delay( const unsigned int msec )
+{
+  SDL_Delay( msec );
+}
+
+bool GfxGlEngine::haveEvent( NEvent& event )
+{
+  SDL_Event sdlEvent;
+
+  if( SDL_PollEvent(&sdlEvent) )
+  {
+    event = EventConverter::instance().get( sdlEvent );
+    return true;
+  }
+
+  return false;
 }

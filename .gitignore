@@ -7,8 +7,10 @@ Makefile
 # Eclipse project files
 .classpath
 .project
+.cproject
 
 build/*
 resources/*
 dependencies/*
 application/*
+en/*

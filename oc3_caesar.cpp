@@ -67,7 +67,7 @@ void CaesarApp::Impl::initLocale()
   // init the internationalization library (gettext)
   setlocale(LC_ALL, "");
   bindtextdomain( "caesar", "." );
-  textdomain("caesar");
+  textdomain( "caesar" );
 }
 
 void CaesarApp::initVideo()
@@ -97,7 +97,7 @@ void CaesarApp::initWaitPictures()
   tm.start();
   std::cout << "Loading images." << std::endl;
   PicLoader &pic_loader = PicLoader::instance();
-  pic_loader.load_wait();
+  pic_loader.load_waitPics();
   tm.stop();
   std::cout << "Images loaded in " << tm.duration() << "ms." << std::endl;
 
@@ -119,7 +119,7 @@ void CaesarApp::Impl::initPictures(const std::string &resourcePath)
 {
   std::cout << "load images begin" << std::endl;
   PicLoader &pic_loader = PicLoader::instance();
-  pic_loader.load_all();
+  pic_loader.loadAllPics();
   std::cout << "load images end" << std::endl;
 
   std::cout << "load walking begin" << std::endl;
@@ -132,7 +132,7 @@ void CaesarApp::Impl::initPictures(const std::string &resourcePath)
   std::cout << "load fonts end" << std::endl;
 
   std::cout << "convert images begin" << std::endl;
-  GfxEngine::instance().loadPictures( pic_loader.get_pictures() );
+  GfxEngine::instance().loadPictures( pic_loader.getPictures() );
   std::cout << "convert images end" << std::endl;
 
   std::cout << "create pictures begin" << std::endl;
